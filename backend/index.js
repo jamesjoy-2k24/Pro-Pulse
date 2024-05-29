@@ -15,7 +15,6 @@ import reviewRoute from "./Routes/review.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -50,17 +49,18 @@ const connectDB = async () => {
 
 async function startServer() {
   await connectDB();
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
 }
 
 startServer();
-
 // Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // Anything that doesn't match the API routes should send the index.html from the frontend build
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
