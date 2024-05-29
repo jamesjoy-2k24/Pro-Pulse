@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  section {
+    @apply py-[75px];
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-full w-[1600px] px-5 mx-auto;
+  }
+
+  .btn {
+    @apply bg-primaryColor hover:bg-red-700 py-[15px] px-[35px] rounded-[10px] text-white font-[800];
+  }
+
+  .heading {
+    @apply text-[44px] leading-[54px] font-[700] text-black;
+  }
+
+  .text__para {
+    @apply text-[18px] leading-[20px] font-[400] mt-[1rem];
+  }
+
+  .header {
+    @apply shadow-md bg-no-repeat bg-cover bg-center w-full h-[80px];
+  }
+
+  .hero__section {
+    @apply bg-[url('./src/assets/images/login.jpeg')] bg-no-repeat bg-cover bg-bottom;
+  }
+
+  .form__label {
+    @apply text-black font-semibold text-[16px] leading-7 mb-2 ml-2;
+  }
+
+  .form__input {
+    @apply bg-[#F5F5F5] w-full px-5 py-3 border border-solid border-gray-200 focus:outline-none
+    focus:border-primaryColor text-[16px] leading-7 text-black placeholder:text-gray-500
+    cursor-pointer rounded-lg;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .container {
+    @apply w-full;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .heading {
+    @apply text-[26px] leading-[36px];
+  }
+
+  .text_para {
+    @apply text-[16px] leading-7 mt-3;
+  }
+  .show__menu {
+    @apply block;
+  }
+}

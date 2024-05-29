@@ -1,0 +1,18 @@
+.card {
+  transition: 0.4s ease-in-out;
+  clip-path: polygon(
+    50px 0%,
+    100% 0,
+    100% calc(100% - 50px),
+    calc(100% - 50px) 100%,
+    0 100%,
+    0% 50px
+  );
+}
+
+.card .info {
+  display: block;
+  text-align: center;
+  font-size: 0.72em;
+  margin: 1em;
+}
