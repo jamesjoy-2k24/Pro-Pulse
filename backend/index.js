@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import cookieParser from "cookie-parser";
+import helmet from "helmet"; // Add this line
 
 import authRoute from "./Routes/auth.js";
 import userRoute from "./Routes/user.js";
@@ -27,6 +28,24 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+// Add this helmet middleware before defining your routes
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://example.com"], // Adjust this as needed
+        imgSrc: ["'self'", "data:", "https://example.com"], // Allow images from these sources
+        styleSrc: ["'self'", "https://example.com"], // Adjust this as needed
+        fontSrc: ["'self'", "https://example.com"], // Adjust this as needed
+        connectSrc: ["'self'", "https://example.com"], // Adjust this as needed
+        // Add more directives as needed
+      },
+    },
+  })
+);
+
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/admin", adminRoute);
