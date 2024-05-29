@@ -36,7 +36,10 @@ export const getPlayerReviews = async (req, res) => {
     const averageRatings =
       reviews.reduce((sum, review) => sum + review.rating, 0) /
         reviews.length || 0;
-    const averageRating = averageRatings.toFixed(2);
+    const averageRating = Number(averageRatings.toFixed(2)).toLocaleString('en-US', {
+      minimumFractionDigits: averageRatings % 1 === 0 ? 0 : 2,
+      maximumFractionDigits: averageRatings % 1 === 0 ? 0 : 2,
+    });
 
     res.status(200).json({
       success: true,

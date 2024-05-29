@@ -20,7 +20,7 @@ const Feedback = () => {
       try {
         const response = await fetch(`${BASE_URL}/reviews/${playerId}/reviews`);
         const data = await response.json();
-        await setReviews(data.reviews);
+        setReviews(data.reviews);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -30,6 +30,8 @@ const Feedback = () => {
     };
     fetchReviews();
   }, [playerId]);
+
+  console.log(reviews);
 
   if (error) {
     return <Error message={error.message} />;
@@ -43,15 +45,16 @@ const Feedback = () => {
     <div>
       <div className="mb-[50px]">
         <h4 className="text-[20px] leading-[30px] font-bold text-black mb-[30px]">
-          All Reviews ({reviews.length}{" "}
-          {reviews.length === 1 ? "Review" : ""})
+          All Reviews ({reviews.length} {reviews.length === 1 ? "Review" : ""})
         </h4>
 
         {reviews.map((review) => (
-          <div key={review._id} className="mb-4 flex items-center justify-between">
+          <div
+            key={review._id}
+            className="mb-4 flex items-center justify-between">
             <div className="flex gap-3 items-center mb-2 mt-2">
               <img
-                src={review.sponsor.photo} // Player photo URL
+                src={review.sponsor.photo}
                 alt={review.sponsor.name}
                 className="w-12 h-12 rounded-full object-cover"
               />
@@ -60,21 +63,20 @@ const Feedback = () => {
                   {review.sponsor.name}
                 </h5>
                 <p className="text-[14px] leading-6 text-black">
+                <p className="text-[14px] leading-6 text-black">
                   {formateDate(review.createdAt)}
+                </p>
                 </p>
               </div>
             </div>
 
-
             <div className="flex items-end flex-col">
-            <div className="flex gap-1 mb-2">
-              {[...Array(review.rating)].map((_, i) => (
-                <FaStar key={i} className="text-yellow-500" />
-              ))}
-            </div>
-            <p className="font-medium text-[15px]">
-              {review.comment}
-            </p>
+              <div className="flex gap-1 mb-2">
+                {[...Array(review.rating)].map((_, i) => (
+                  <FaStar key={i} className="text-yellow-500" />
+                ))}
+              </div>
+              <p className="font-medium text-[15px]">{review.comment}</p>
             </div>
           </div>
         ))}
