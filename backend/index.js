@@ -29,17 +29,33 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Add this helmet middleware before defining your routes
+// Add helmet middleware before defining your routes
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://example.com"], // Adjust this as needed
-        imgSrc: ["'self'", "data:", "https://example.com"], // Allow images from these sources
-        styleSrc: ["'self'", "https://example.com"], // Adjust this as needed
-        fontSrc: ["'self'", "https://example.com"], // Adjust this as needed
-        connectSrc: ["'self'", "https://example.com"], // Adjust this as needed
+        scriptSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net",
+          "https://cdnjs.cloudflare.com",
+        ], // Tailwind CSS and other script sources
+        imgSrc: [
+          "'self'",
+          "https://pro-pulse-da2011376672.herokuapp.com",
+          "https://res.cloudinary.com",
+        ], // Cloudinary for images
+        styleSrc: [
+          "'self'",
+          "https://fonts.googleapis.com",
+          "https://cdnjs.cloudflare.com",
+        ], // Google Fonts and other style sources
+        fontSrc: [
+          "'self'",
+          "https://fonts.gstatic.com",
+          "https://cdnjs.cloudflare.com",
+        ], // Google Fonts and other font sources
+        connectSrc: ["'self'"], // Allow connections only to same-origin
         // Add more directives as needed
       },
     },
