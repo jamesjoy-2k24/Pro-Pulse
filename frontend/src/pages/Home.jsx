@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaLaptop, FaUsers, FaFutbol, FaArrowUp } from "react-icons/fa";
-import offer from "../assets/images/offer.jpg";
+import offer from "../assets/images/offer.jpeg";
 import offer1 from "../assets/images/offer1.jpg";
 import offer2 from "../assets/images/offer2.jpg";
 import faqImg from "../assets/images/profile.jpg";
