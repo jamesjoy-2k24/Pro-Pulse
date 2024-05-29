@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Add helmet middleware before defining your routes
+// Add helmet middleware before defining your routesapp.use(helmet({app.use(helmet({
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -44,7 +44,8 @@ app.use(
           "'self'",
           "https://pro-pulse-da2011376672.herokuapp.com",
           "https://res.cloudinary.com",
-        ], // Cloudinary for images
+          "'self' data:",
+        ], // Cloudinary for images and 'self' for inline data
         styleSrc: [
           "'self'",
           "https://fonts.googleapis.com",
