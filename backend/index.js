@@ -1,16 +1,17 @@
 // import express from "express";
 const express = require("express");
 const cookieParser = require("cookie-parser");
-import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const path = require("path");
 
-import authRoute from "./Routes/auth.js";
-import userRoute from "./Routes/user.js";
-import adminRoute from "./Routes/admin.js";
-import playerRoute from "./Routes/player.js";
-import bookingRoute from "./Routes/booking.js";
-import reviewRoute from "./Routes/review.js";
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/users");
+const adminRoute = require("./routes/admin");
+const playerRoute = require("./routes/players");
+const bookingRoute = require("./routes/bookings");
+const reviewRoute = require("./routes/reviews");
 
 dotenv.config();
 
@@ -56,9 +57,6 @@ async function startServer() {
 }
 
 startServer();
-
-// Deploy
-const path = require("path");
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "../frontend/build")));
