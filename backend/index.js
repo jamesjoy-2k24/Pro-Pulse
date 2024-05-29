@@ -1,4 +1,3 @@
-//
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -35,11 +34,14 @@ app.use("/api/v1/players", playerRoute);
 app.use("/api/v1/bookings", bookingRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
-// Database connection
-mongoose.set("strictQuery", false);
+dotenv.config();
+
+// Logging environment variables for debugging
+console.log("Mongo URI:", process.env.MONGO_URI);
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI.trim(), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
