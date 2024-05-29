@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import cookieParser from "cookie-parser";
-import helmet from "helmet"; // Add this line
+import helmet from "helmet";
 
 import authRoute from "./Routes/auth.js";
 import userRoute from "./Routes/user.js";
@@ -14,6 +14,7 @@ import playerRoute from "./Routes/player.js";
 import bookingRoute from "./Routes/booking.js";
 import reviewRoute from "./Routes/review.js";
 
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
