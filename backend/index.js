@@ -15,7 +15,7 @@ import reviewRoute from "./Routes/review.js";
 dotenv.config();
 
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = 5001 || process.env.PORT;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -95,13 +95,17 @@ app.use(
 );
 
 // HEROKU
-app.get("/*", function (req, res) {
-  res.sendFile(
-    path.join(__dirname + "../frontend/build/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
-});
+// app.get("/*", function (req, res) {
+//   res.sendFile(
+//     path.join(__dirname + "../frontend/build/index.html"),
+//     function (err) {
+//       if (err) {
+//         res.status(500).send(err);
+//       }
+//     }
+//   );
+// });
+
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+}
