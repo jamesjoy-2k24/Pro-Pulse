@@ -1,5 +1,5 @@
-//
-import express from "express";
+// import express from "express";
+const express = require("express");
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -15,7 +15,7 @@ import reviewRoute from "./Routes/review.js";
 dotenv.config();
 
 const app = express();
-const port = 8005;
+const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: "http://localhost:3000",
