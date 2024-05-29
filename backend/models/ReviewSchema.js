@@ -21,6 +21,10 @@ const reviewSchema = new mongoose.Schema({
     ref: "Sponsor",
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // populate the player and sponsor fields name and photo
