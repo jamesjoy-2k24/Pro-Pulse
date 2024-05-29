@@ -1,4 +1,4 @@
-// 
+//
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -56,3 +56,14 @@ async function startServer() {
 }
 
 startServer();
+
+// Deploy
+const path = require("path");
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Anything that doesn't match the API routes should send the index.html from the frontend build
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
