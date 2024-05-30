@@ -15,7 +15,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 5003 || process.env.PORT;
+const port = 5000 || process.env.PORT;
 
 const corsOptions = {
   origin: "http://localhost:3000",
