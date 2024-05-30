@@ -16,9 +16,8 @@ const Tabs = ({ tab, setTab }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
-    // Force reload to ensure all cached data is cleared
-    window.location.reload(true);
-    navigate("/home");
+
+  navigate("/home");
     toast.success("Logged out successfully");
   };
 

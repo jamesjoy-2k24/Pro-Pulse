@@ -35,10 +35,9 @@ const Dashboard = () => {
     return null;
   }
 
-
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload();
+    window.location.href = "/login";
   };
 
   const handleTabClick = (tab) => {
@@ -144,8 +143,12 @@ const Dashboard = () => {
                 <Overview players={players} sponsors={sponsors} />
               )}
               {activeTab === "players" && <Players players={players} />}
-              {activeTab === "users" && <Users sponsors={sponsors} loading = {loading} />}
-              {activeTab === "notifications" && <Bookings bookings={bookings} />}
+              {activeTab === "users" && (
+                <Users sponsors={sponsors} loading={loading} />
+              )}
+              {activeTab === "notifications" && (
+                <Bookings bookings={bookings} />
+              )}
               {activeTab === "settings" && <Setting />}
             </div>
           </div>

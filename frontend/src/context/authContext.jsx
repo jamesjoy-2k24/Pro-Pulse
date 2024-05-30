@@ -56,8 +56,10 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
-    // Force reload to ensure all cached data is cleared
-    window.location.reload(true);
+
+    // Clear state
+    dispatch({ type: "LOGOUT" });
+
     // Redirect to home page
     navigate("/home");
     // Dispatch logout action
