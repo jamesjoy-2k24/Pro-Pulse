@@ -2,7 +2,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import helmet from "helmet";
 
 import authRoute from "./Routes/auth.js";
@@ -12,10 +11,11 @@ import playerRoute from "./Routes/player.js";
 import bookingRoute from "./Routes/booking.js";
 import reviewRoute from "./Routes/review.js";
 
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 5001 || process.env.PORT;
+const port = 5003 || process.env.PORT;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -34,22 +34,18 @@ app.use("/api/v1/players", playerRoute);
 app.use("/api/v1/bookings", bookingRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
-dotenv.config();
+// Connect to MongoDB
+const MONGO_URI =
+  "mongodb+srv://jamesjoy2k24:j2002o3y12jr@cluster1.jibwvhc.mongodb.net/pro-pulse?retryWrites=true&w=majority&appName=Cluster1";
 
-// Logging environment variables for debugging
-console.log("Mongo URI:", process.env.MONGO_URI);
-
-const connectDB = async () => {
+async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGO_URI.trim(), {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB Successfully connected");
+    await mongoose.connect(MONGO_URI);
+    console.log("Connected to MongoDB");
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 async function startServer() {
   await connectDB();
@@ -93,19 +89,3 @@ app.use(
     },
   })
 );
-
-// HEROKU
-// app.get("/*", function (req, res) {
-//   res.sendFile(
-//     path.join(__dirname + "../frontend/build/index.html"),
-//     function (err) {
-//       if (err) {
-//         res.status(500).send(err);
-//       }
-//     }
-//   );
-// });
-
-if(process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
-}
