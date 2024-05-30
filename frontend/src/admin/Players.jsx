@@ -51,7 +51,7 @@ const Players = ({ players }) => {
       });
       if (response.ok) {
         toast.success("Player deleted successfully");
-        window.location.reload();
+        // window.location.reload();
       } else {
         toast.error("Failed to delete player");
       }
@@ -131,7 +131,7 @@ const Players = ({ players }) => {
         </div>
       </div>
 
-{/* ======== PAGINATION ======== */}
+      {/* ======== PAGINATION ======== */}
       <nav
         className="mt-5 w-[77%] mb-5 mx-auto flex items-center justify-between  text-sm"
         aria-label="Page navigation example">
@@ -175,7 +175,7 @@ const Players = ({ players }) => {
         </ul>
       </nav>
 
-{/* ======== PLAYERS ======== */}
+      {/* ======== PLAYERS ======== */}
       <div className="max-w-[1200px] mx-auto">
         <div className="flex  gap-[2rem] justify-center flex-wrap">
           {currentPlayers.map((player) => (
@@ -246,8 +246,9 @@ const Players = ({ players }) => {
               <p className="mt-4">
                 <strong>Email:</strong> {currentPlayer.email}
               </p>
-              <p >
-                <strong>Phone:</strong> {currentPlayer.phone ? currentPlayer.phone : "-"}
+              <p>
+                <strong>Phone:</strong>{" "}
+                {currentPlayer.phone ? currentPlayer.phone : "-"}
               </p>
               <p>
                 <strong>Place:</strong>{" "}
@@ -282,11 +283,12 @@ const Players = ({ players }) => {
                 {currentPlayer.experiences?.length > 0
                   ? currentPlayer.experiences.map((experience) => (
                       <div key={experience._id} className="ml-[3rem] mb-2">
-                        <li>{experience.startDate} - {experience.endDate}</li>
+                        <li>
+                          {experience.startDate} - {experience.endDate}
+                        </li>
                         <li>{experience.club}</li>
                         <li>{experience.position}</li>
                       </div>
-                      
                     ))
                   : "-"}
               </div>

@@ -22,7 +22,7 @@ const Sponsors = ({ sponsors, loading }) => {
       });
       if (response.ok) {
         toast.success("Sponsor deleted successfully");
-        window.location.reload();
+        // window.location.reload();
       } else {
         toast.error("Failed to delete sponsor");
       }
