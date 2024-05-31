@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const handleTabClick = (tab) => {
