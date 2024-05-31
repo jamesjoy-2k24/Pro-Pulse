@@ -38,6 +38,8 @@ function Bookings() {
     fetchBookings();
   }, []);
 
+  console.log(bookings);
+
   const exportPDF = () => {
     const doc = new jsPDF();
     const tableColumn = [

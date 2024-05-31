@@ -13,7 +13,7 @@ const router = express.Router();
 
 // Routes
 router.get("/:id", authenticate, restrict(["sponsor"]), getSingleSponsor);
-router.get("/", authenticate, restrict(["admin"]), getAllSponsors);
+router.get("/", getAllSponsors);
 router.put("/:id", authenticate, restrict(["sponsor"]), updateSponsor);
 router.delete(
   "/:id",

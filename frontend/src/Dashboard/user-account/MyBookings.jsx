@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { BASE_URL, token } from "../../config";
 import { toast } from "react-toastify";
-import {useParams} from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 const SponsorBookings = () => {
   const [sponsorId, setSponsorId] = useState(null);

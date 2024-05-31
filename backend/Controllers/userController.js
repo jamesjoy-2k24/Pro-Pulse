@@ -114,9 +114,10 @@ export const getSponsorProfile = async (req, res) => {
 export const getSponsorBookings = async (req, res) => {
   const { id } = req.params;
   try {
-    const bookings = await Booking.find({ sponsor: id })
-      .populate("player", "name photo")
-      .populate("sponsor", "name photo");
+    const bookings = await Booking.find({ sponsor: id }).populate(
+      "player",
+      "name photo"
+    );
 
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({

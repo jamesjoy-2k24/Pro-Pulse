@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { authContext } from "../../context/authContext.jsx";
+import logo from "../../../public/logo.png";
 
 const navLinks = [
   {
@@ -78,7 +79,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* ======Nav Left===== */}
           <div className="logo">
-            <h1 className="text-primaryColor text-[28px] font-[700]">
+            <h1 className="text-primaryColor text-[28px] font-[700] flex items-center gap-2">
+              <img src={logo} alt="logo" className="w-[30px]" />
               <Link to="/home">Pro-Pulse</Link>
             </h1>
           </div>
