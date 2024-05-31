@@ -130,7 +130,6 @@ export const getPlayerBookings = async (req, res) => {
 };
 
 // =========== Get verified Players ============
-// controllers/playerController.js
 export const getApprovedPlayers = async (req, res) => {
   try {
     const players = await Player.find({ isApproved: "approved" });

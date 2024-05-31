@@ -8,44 +8,11 @@ import Stripe from "stripe";
 // dotenv.config();
 // import { sendSMS } from "../utils/Twilio.js";
 
-// ====== Create bookings for players ========
-// export const createBooking =  async (req, res) => {
-//   const {playerId, sponsorId} = req.body;
-
-//   try{
-//     const booking = new Booking({
-//       player: playerId,
-//       sponsor: sponsorId
-//     });
-//     await booking.save();
-
-//     const player = await Player.findById(playerId);
-//     const sponsor = await Sponsor.findById(sponsorId);
-
-//     await sendSMS(player.phone, `Booking confirmed for ${player.name} from ${sponsor.name}`);
-//     await sendSMS(sponsor.phone, `Booking confirmed for ${player.name} from ${sponsor.name}`);
-//     res.status(200).json({
-//       success: true,
-//       message: "Booking created successfully",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// }
-
 // ====== Get checkout session ========
-
 export const getCheckoutSession = async (req, res) => {
   try {
-    console.log("Request Body:", req.body);
-
     const playerId = req.params.playerId;
     const { sponsorId } = req.body;
-
     // Validate playerId and sponsorId as ObjectId
     if (
       !mongoose.Types.ObjectId.isValid(playerId) ||
@@ -120,6 +87,8 @@ export const getCheckoutSession = async (req, res) => {
     });
 
     await booking.save();
+    player.isBooked = true;
+    await player.save();
 
     res.status(200).json({
       success: true,
@@ -204,5 +173,3 @@ export const deleteBooking = async (req, res) => {
     });
   }
 };
-
-

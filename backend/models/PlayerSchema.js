@@ -98,6 +98,10 @@ const playerSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  isBooking: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

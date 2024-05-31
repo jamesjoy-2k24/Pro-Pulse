@@ -12,8 +12,6 @@ const Players = () => {
 
   const { data: players, loading, error } = useFetchData(`${BASE_URL}/players`);
 
-  // console.log("Players data:", players);
-
   //  Null statement debug
   if (!players) {
     return null;

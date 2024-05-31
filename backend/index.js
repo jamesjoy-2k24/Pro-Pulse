@@ -15,10 +15,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = 5005 || process.env.PORT;
 
 const corsOptions = {
-  origin: "https://pro-pulse-org.onrender.com",
+  // origin: "https://pro-pulse-org.onrender.com",
+  origin: "http://localhost:3000",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -35,12 +36,9 @@ app.use("/api/v1/bookings", bookingRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
 // Connect to MongoDB
-const MONGO_URI =
-  "mongodb+srv://jamesjoy2k24:j2002o3y12jr@cluster1.jibwvhc.mongodb.net/pro-pulse?retryWrites=true&w=majority&appName=Cluster1";
-
 async function connectDB() {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.log(error);

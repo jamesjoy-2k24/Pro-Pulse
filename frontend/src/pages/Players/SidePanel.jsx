@@ -36,7 +36,7 @@ const SidePanel = ({ playerId, price, available }) => {
       const data = await response.json();
 
       // Debugging: Log the response data
-      console.log("Response Data:", data);
+      // console.log("Response Data:", data);
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to create checkout session");

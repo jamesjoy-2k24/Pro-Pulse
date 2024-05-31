@@ -16,7 +16,7 @@ const router = express.Router();
 // Nested Routes
 router.use(
   "/:playerId/reviews",
-  authenticate,
+  authenticate, 
   restrict(["sponsor", "admin"]),
   reviewRouter
 );

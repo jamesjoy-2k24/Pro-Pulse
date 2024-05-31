@@ -4,7 +4,7 @@ import { FaLaptop, FaUsers, FaFutbol, FaArrowUp } from "react-icons/fa";
 import offer from "../assets/images/offer.jpeg";
 import offer1 from "../assets/images/offer1.jpg";
 import offer2 from "../assets/images/offer2.jpg";
-import faqImg from "../assets/images/profile.jpg";
+import faqImg from "../assets/images/faq.jpeg";
 import Contactimg from "../assets/images/contact.jpg";
 import About from "../components/About/About";
 import "./Home.css";
@@ -20,14 +20,14 @@ const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const { data: players } = UseFetchData(`${BASE_URL}/players`);
-
-  // Get sponsor total count
-  // const sponsorCount = sponsors ? sponsors.length : 0;
-  // console.log("sponsorCount", sponsorCount);
+  const { data: sponsors } = UseFetchData(`${BASE_URL}/users`);
 
   // Get player total count
   const playerCount = players ? players.length : 0;
   console.log("playerCount", playerCount);
+
+  const sponsorCount = sponsors ? sponsors.length : 0;
+  console.log("sponsorCount", sponsorCount);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,7 +83,7 @@ const Home = () => {
 
                 <div className="flex flex-col items-center gap-3 text-center">
                   <h1 className="text-[36px] leading-[56px] lg:text-[45px] lg:leading-[56px] rounded-[10px] text-black font-[800] border-x-2 bg-white p-1 w-[140px]">
-                    100+
+                    {sponsorCount}+
                   </h1>
                   <p className="text__para text-whiteColor font-[500]">
                     Active Sponsors
@@ -91,7 +91,7 @@ const Home = () => {
                   <p className="">⭐⭐⭐⭐</p>
                 </div>
 
-                <div className="flex flex-col items-center gap-3 text-center">
+                {/* <div className="flex flex-col items-center gap-3 text-center">
                   <h1 className="text-[36px] leading-[56px] lg:text-[45px] lg:leading-[56px] rounded-[10px] text-black font-[800] border-x-2 bg-white p-1 w-[140px]">
                     100%
                   </h1>
@@ -99,7 +99,7 @@ const Home = () => {
                     User Satisfaction
                   </p>
                   <p className="">⭐⭐⭐⭐⭐</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
