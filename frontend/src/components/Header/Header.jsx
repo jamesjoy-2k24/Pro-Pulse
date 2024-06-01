@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { authContext } from "../../context/authContext.jsx";
-import logo from "../../../public/logo.png";
+import logo from "/logo.png";
 
 const navLinks = [
   {
