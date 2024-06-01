@@ -64,12 +64,12 @@ const Login = () => {
         navigate("/admin/dashboard");
         // window.location.reload(true);
       } else if (result.role === "player") {
-        // navigate("/players/profile/me/");
-        navigate("/");
-        // window.location.reload(true);
+        navigate("/players/profile/me/");
+        // navigate("/");
+        window.location.reload(true);
       } else if (result.role === "sponsor") {
         navigate("/players");
-        // window.location.reload(true);
+        window.location.reload(true);
       }
     } catch (error) {
       setLoading(false);
