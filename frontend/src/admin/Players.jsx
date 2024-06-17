@@ -9,8 +9,6 @@ const Players = ({ players }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  // console.log(players); // Debugging line
-
   // Total pages
   const totalItems = players?.length ?? 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -36,41 +34,6 @@ const Players = ({ players }) => {
 
   const [showDetails, setShowDetails] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(null);
-
-  // Delete player
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      `Are you sure you want to delete ${currentPlayer?.name ?? "player"}?`
-    );
-    if (confirmDelete) {
-      const response = await fetch(`${BASE_URL}/players/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (response.ok) {
-        toast.success("Player deleted successfully");
-        // window.location.reload();
-      } else {
-        toast.error("Failed to delete player");
-      }
-    }
-  };
-
-  const handleToggleDetails = (player) => {
-    if (currentPlayer && currentPlayer._id === player._id) {
-      setShowDetails(!showDetails);
-    } else {
-      setCurrentPlayer(player);
-      setShowDetails(true);
-    }
-  };
-
-  const handleAddPlayer = () => {
-    window.location.href = "/admin/add-player";
-    toast.success("Welcome to Player Adding Page");
-  };
 
   // Approve player
   const handleApprovePlayer = async (_id) => {
@@ -114,6 +77,63 @@ const Players = ({ players }) => {
       console.error("Error declining player:", error);
       toast.error("An error occurred while declining the player");
     }
+  };
+
+  // Delete player
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${currentPlayer?.name ?? "player"}?`
+    );
+    if (confirmDelete) {
+      const response = await fetch(`${BASE_URL}/players/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        toast.success("Player deleted successfully");
+        // window.location.reload();
+      } else {
+        toast.error("Failed to delete player");
+      }
+    }
+  };
+
+  // Pending Player
+  const handlePendingPlayer = async (id) => {
+    try {
+      const response = await fetch(`${BASE_URL}/admin/pending-player/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ status: "pending" }),
+      });
+      if (response.ok) {
+        toast.success("Player pending successfully");
+      } else {
+        toast.error("Failed to pending player");
+      }
+    } catch (error) {
+      console.error("Error approving player:", error);
+      toast.error("An error occurred while approving the player");
+    }
+  };
+
+  const handleToggleDetails = (player) => {
+    if (currentPlayer && currentPlayer._id === player._id) {
+      setShowDetails(!showDetails);
+    } else {
+      setCurrentPlayer(player);
+      setShowDetails(true);
+    }
+  };
+
+  const handleAddPlayer = () => {
+    window.location.href = "/admin/add-player";
+    toast.success("Welcome to Player Adding Page");
   };
 
   return (
@@ -323,6 +343,15 @@ const Players = ({ players }) => {
                       handleDeclinePlayer(currentPlayer._id);
                     }}>
                     Decline
+                  </button>
+
+                  <button
+                    className="bg-blue-600 font-extrabold text-white hover:bg-red-500 transition-all duration-300 w-[100px] h-[40px] rounded-md"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePendingPlayer(currentPlayer._id);
+                    }}>
+                    Pending
                   </button>
                 </div>
               </div>
