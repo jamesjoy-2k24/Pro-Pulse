@@ -15,7 +15,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 5005 || process.env.PORT;
+const port = 5000 || process.env.PORT;
 
 const corsOptions = {
   // origin: "https://pro-pulse-org.onrender.com",
