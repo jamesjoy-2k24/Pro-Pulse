@@ -124,3 +124,29 @@ export const declineSponsor = async (req, res) => {
     res.status(500).json({ message: "Internal server error", success: false });
   }
 };
+
+// Pending Players
+export const pendingPlayers = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const player = await Player.findByIdAndUpdate(
+      id,
+      { isApproved: status },
+      { new: true }
+    );
+
+    if (!player) {
+      return res
+        .status(404)
+        .json({ message: "Player not found", success: false });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Player status updated", success: true, player });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", success: false });
+  }
+};

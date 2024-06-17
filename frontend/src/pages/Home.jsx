@@ -265,7 +265,7 @@ const Home = () => {
               Do you have any questions? Get in touch with us!
             </h1>
             <Link to="/contact">
-              <button className="btn">
+              <button className="bg-red-600 text-white font-bold px-6 py-2 rounded-md transition duration-150 hover:bg-red-700">
                 <span>CONTACT US</span>
               </button>
             </Link>

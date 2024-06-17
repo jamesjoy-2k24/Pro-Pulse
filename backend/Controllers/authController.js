@@ -87,57 +87,6 @@ export const register = async (req, res) => {
   }
 };
 
-/*export const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Please enter all fields" });
-  }
-
-  try {
-    let user = null;
-
-    // Check if user exists
-    const admin = await Admin.findOne({ email });
-    const sponsor = await Sponsor.findOne({ email });
-    const player = await Player.findOne({ email });
-
-    // If user does not exist
-    if (!sponsor && !player && !admin) {
-      return res.status(400).json({ message: "User does not exist" });
-    }
-
-    // If user exists
-    if (admin) {
-      user = admin;
-    } else if (sponsor) {
-      user = sponsor;
-    } else if (player) {
-      user = player;
-    }
-
-    // Check if password is correct
-    const isMatch = await bcrypt.compare(req.body.password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // If password is correct Generate Token
-    const token = generateToken(user);
-
-    const { password, role, appointments, ...rest } = user._doc;
-
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      token,
-      role,
-      user: rest,
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};*/
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -179,7 +128,7 @@ export const login = async (req, res) => {
     // Check if password is correct
     const isMatch = await bcrypt.compare(req.body.password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid password" });
     }
 
     // If password is correct Generate Token

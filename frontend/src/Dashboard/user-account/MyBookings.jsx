@@ -2,27 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { BASE_URL, token } from "../../config";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
 
 const SponsorBookings = () => {
-  const [sponsorId, setSponsorId] = useState(null);
+  // const [sponsorId, setSponsorId] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  // useEffect(() => {
-  //   if (token) {
-  //     const decoded = JSON.parse(atob(token.split(".")[1]));
-  //     setSponsorId(decoded.id);
-  //   }
-  // }, [token]);
-
-  const { id } = useParams();
-  useEffect(() => {
-    setSponsorId(id);
-  }, [id]);
+  // Get sponsor id from token or local storage
+  const user = localStorage.getItem("user");
+  const userData = user ? JSON.parse(user) : null;
+  const sponsorId = userData ? userData._id : null;
 
   useEffect(() => {
     const fetchBookings = async () => {

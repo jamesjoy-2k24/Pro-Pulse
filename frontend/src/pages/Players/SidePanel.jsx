@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { FaDotCircle } from "react-icons/fa";
 import { FaSmile } from "react-icons/fa";
 
-const SidePanel = ({ playerId, price, available }) => {
+const SidePanel = ({ playerId, available }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const sponsorId = user?._id;
 
@@ -59,7 +59,7 @@ const SidePanel = ({ playerId, price, available }) => {
       <div className="flex items-center justify-between">
         <p className="text__para mt-0 font-semibold">Price</p>
         <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-black font-bold">
-          LKR {price}
+          LKR 600
         </span>
       </div>
 
