@@ -1,4 +1,15 @@
-/* eslint-disable react/prop-types */
+/**
+ * eslint-disable react/prop-types
+ *
+ * @format
+ */
+
+/**
+ * eslint-disable react/prop-types
+ *
+ * @format
+ */
+
 /**
  * eslint-disable react/prop-types
  *
@@ -17,11 +28,6 @@ const SidePanel = ({ playerId, available }) => {
 	const bookingHandler = async () => {
 		// Debugging: Log the sponsorId
 		console.log('sponsorId', sponsorId);
-
-		if(playerId){
-			toast.error('Now you are player Login as Sponsor to book !')
-			return;
-		}
 
 		// Ensure sponsorId is a valid string
 		if (!sponsorId) {
