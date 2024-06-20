@@ -1,4 +1,9 @@
 /* eslint-disable react/prop-types */
+/**
+ * eslint-disable react/prop-types
+ *
+ * @format
+ */
 
 import { BASE_URL, token } from '../../config';
 import { toast } from 'react-toastify';
@@ -12,6 +17,11 @@ const SidePanel = ({ playerId, available }) => {
 	const bookingHandler = async () => {
 		// Debugging: Log the sponsorId
 		console.log('sponsorId', sponsorId);
+
+		if(playerId){
+			toast.error('Now you are player Login as Sponsor to book !')
+			return;
+		}
 
 		// Ensure sponsorId is a valid string
 		if (!sponsorId) {
@@ -47,7 +57,9 @@ const SidePanel = ({ playerId, available }) => {
 			}
 		} catch (error) {
 			console.error('Error during booking:', error);
-			toast.error('Please login to book');
+			toast.error(
+				'If you book the player , PLease login or sign up as a Sponsor'
+			);
 			// window.location.href = "/oops";
 		}
 	};
