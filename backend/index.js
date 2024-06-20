@@ -21,7 +21,8 @@ const port = 5000 || process.env.PORT;
 
 const corsOptions = {
 	// origin: 'http://localhost:3000',
-	origin: 'https://pro-pulse-org.onrender.com',
+	origin: 'https://sunny-souffle-6042f9.netlify.app',
+	// origin: 'https://pro-pulse-org.onrender.com',
 	credentials: true, //access-control-allow-credentials:true
 	optionSuccessStatus: 200,
 };
