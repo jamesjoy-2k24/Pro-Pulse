@@ -278,7 +278,6 @@ const Signup = () => {
                     className="ml-3 text-gray-500 bg-gray-50 font-semibold text-[15px] leading-7 px-4
                 py-2 rounded-md focus:outline-none">
                     <option value="sponsor">Sponsor</option>
-                    <option value="coach">Coach</option>
                     <option value="player">Player</option>
                   </select>
                 </label>
