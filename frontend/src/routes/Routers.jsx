@@ -54,6 +54,14 @@ const Routers = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/sponsor/profile/me/"
+        element={
+          <ProtectedRoute allowedRoles={["sponsor"]}>
+            <MyAccount />
+          </ProtectedRoute>
+        }
+      />
 
       {/* ===== Player Routes ===== */}
       <Route

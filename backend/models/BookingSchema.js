@@ -34,11 +34,11 @@ const bookingSchema = new mongoose.Schema({
 bookingSchema.pre(/^find/, function (next) {
   this.populate({
     path: "player",
-    select: "name photo",
+    select: "name photo email",
   });
   this.populate({
     path: "sponsor",
-    select: "name photo",
+    select: "name photo email phone",
   });
   next();
 });

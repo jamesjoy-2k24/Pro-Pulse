@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaLaptop, FaUsers, FaFutbol, FaArrowUp } from "react-icons/fa";
+import {
+  FaLaptop,
+  FaUsers,
+  FaFutbol,
+  FaArrowUp,
+  FaChevronRight,
+  FaPlay,
+  FaCheckCircle,
+  FaStar,
+} from "react-icons/fa";
 import offer from "../assets/images/offer.jpeg";
 import offer1 from "../assets/images/offer1.jpg";
 import offer2 from "../assets/images/offer2.jpg";
 import faqImg from "../assets/images/faq.jpeg";
 import Contactimg from "../assets/images/contact.jpg";
+import LandingImg from "../assets/images/landingpage.jpg";
 import About from "../components/About/About";
-import "./Home.css";
 import FaqList from "../components/Faq/FaqList";
 import UseFetchData from "../hooks/useFetchData";
 import { BASE_URL } from "../config";
@@ -18,268 +27,389 @@ const scrollToTop = () => {
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
-
   const { data: players } = UseFetchData(`${BASE_URL}/players`);
   const { data: sponsors } = UseFetchData(`${BASE_URL}/users`);
 
-  // Get player total count
   const playerCount = players ? players.length : 0;
-  console.log("playerCount", playerCount);
-
   const sponsorCount = sponsors ? sponsors.length : 0;
-  console.log("sponsorCount", sponsorCount);
 
   useEffect(() => {
     const handleScroll = () => {
-      const offersSection = document.querySelector(".offers");
-      const rect = offersSection.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 200) {
         setIsVisible(true);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div>
-      {/* ======== hero section ========= */}
-      <section className="hero__section 2xl:h-screen flex items-center">
-        <div className="container">
-          <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
-            {/* ========= hero content ========= */}
-            <div>
-              <div className="lg:w-[570px] lg:text-justify space-x-2">
-                <h1 className="text-[40px] leading-[46px] text-whiteColor font-[900] md:text-[60px] md:leading-[70px]">
-                  Revolutionize Sports Player with{" "}
-                  <span className="text-red-700 font-[900]">Pro-pulse</span>
-                </h1>
-                <p className="text__para text-white font-[500]">
-                  PRO PULSE is a web app that allows you can hire eligible &
-                  verified sports player. You can hire Anywhere from anywhere
-                  you can access. A simple and effective way to search and find
-                  your desired player.
-                </p>
-                <Link to="/players">
-                  <button className="btn hover:opacity-100 hover:bg-red-700 transition-all duration-100 mt-[2rem] bg-primaryColor text-white">
-                    Get Started
-                  </button>
-                </Link>
-              </div>
-
-              {/* ======== hero left ========= */}
-
-              <div className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]">
-                <div className="flex flex-col items-center gap-3 text-center">
-                  <h1 className="text-[36px] leading-[56px] lg:text-[45px] lg:leading-[56px] rounded-[10px] text-black font-[800] border-x-2 bg-white p-1 w-[140px]">
-                    {playerCount}+
-                  </h1>
-                  <p className="text__para text-whiteColor font-[500]">
-                    Active Players
-                  </p>
-                  <p className="">⭐⭐⭐</p>
-                </div>
-
-                <div className="flex flex-col items-center gap-3 text-center">
-                  <h1 className="text-[36px] leading-[56px] lg:text-[45px] lg:leading-[56px] rounded-[10px] text-black font-[800] border-x-2 bg-white p-1 w-[140px]">
-                    {sponsorCount}+
-                  </h1>
-                  <p className="text__para text-whiteColor font-[500]">
-                    Active Sponsors
-                  </p>
-                  <p className="">⭐⭐⭐⭐</p>
-                </div>
-
-                {/* <div className="flex flex-col items-center gap-3 text-center">
-                  <h1 className="text-[36px] leading-[56px] lg:text-[45px] lg:leading-[56px] rounded-[10px] text-black font-[800] border-x-2 bg-white p-1 w-[140px]">
-                    100%
-                  </h1>
-                  <p className="text__para text-whiteColor font-[500]">
-                    User Satisfaction
-                  </p>
-                  <p className="">⭐⭐⭐⭐⭐</p>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* ======== hero section end ========= */}
-
-      {/* ======== Timeline section ========= */}
-      <section className="timeline-section py-30 bg-gray-100">
-        <h1 className="text-[3rem] font-bold text-center mb-[4rem]">
-          <span className="relative inline-block">
-            <span className="inline-block text-[3rem] text-white p-1 relative z-10">
-              Our Timeline
-            </span>
-            <span className="absolute rounded-[10px] inset-0 bg-primaryColor z-0 transform -skew-x-3 -skew-y-3"></span>
-          </span>
-        </h1>
+    <div className="overflow-hidden bg-white">
+      {/* ======== Hero Section: Cinematic & Futuristic ======== */}
+      <section className="relative min-h-[90vh] flex items-center pt-20 pb-32 overflow-hidden bg-slate-900">
+        {/* Animated Background Mesh */}
+        <div className="absolute -left-20 -top-20 h-[600px] w-[600px] rounded-full bg-primaryColor/20 blur-[150px] animate-pulse" />
         <div
-          className={`timeline max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row justify-around items-center
-        ${isVisible ? "animated-fade-in" : ""}`}>
-          <div className="first-circle text-center mb-8 lg:mb-0 max-w-xs bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-            <div className="circle bg-white p-6 rounded-full shadow-lg inline-block mb-4">
-              <FaLaptop className="text-6xl text-blue-500" />
-            </div>
-            <h1 className="text-2xl font-semibold mb-2">
-              Cutting-edge Technology
-            </h1>
-            <p className="text-gray-700">
-              Utilizes latest MERN Stack for superior performance and
-              functionality.
-            </p>
-          </div>
-          <div
-            className="first-circle text-center mb-8 lg:mb-0 max-w-xs bg-white p-6 
-            rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-            <div className="circle bg-white p-6 rounded-full shadow-lg inline-block mb-4">
-              <FaUsers className="text-6xl text-green-500" />
-            </div>
-            <h1 className="text-2xl font-semibold mb-2">
-              Focus on efficiency and user experience
-            </h1>
-            <p className="text-gray-700">
-              Creates dynamic websites with high-resolution images and engaging
-              landing pages.
-            </p>
-          </div>
-          <div className="first-circle text-center max-w-xs h-[320px] bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-            <div className="circle bg-white p-6 rounded-full shadow-lg inline-block mb-4 ">
-              <FaFutbol className="text-6xl text-red-500" />
-            </div>
-            <h1 className="text-2xl font-semibold mb-2">
-              Specialization in soccer and cricket players
-            </h1>
-            <p className="text-gray-700">
-              Targeted services for sponsors to hire top players in specific
-              sports.
-            </p>
-          </div>
-        </div>
-      </section>
-      {/* ======== Timeline section end ========= */}
+          className="absolute -right-20 bottom-0 h-[600px] w-[600px] rounded-full bg-primaryColor/10 blur-[150px] animate-pulse"
+          style={{ animationDelay: "2s" }}
+        />
 
-      {/* ======== Our Offers ========= */}
-      <section className="offer py-30 bg-white">
-        <h1 className="text-[3rem] font-bold text-center mb-12">
-          <span className="relative inline-block">
-            <span className="inline-block text-[3rem] text-white p-1 relative z-10">
-              Our Offers
-            </span>
-            <span className="absolute rounded-[10px] inset-0 bg-primaryColor z-0 transform -skew-x-3 -skew-y-3"></span>
-          </span>
-        </h1>
-        <div
-          className={`offers text-center gap-[3rem] max-w-7xl mx-auto  flex flex-col lg:flex-row justify-around items-center ${
-            isVisible ? "animate-fade-in" : ""
-          }`}>
-          <div className="first-offer max-w-[23rem] bg-gray-100 p-6 rounded-lg shadow-lg mb-8 lg:mb-0 transform transition duration-500 hover:scale-105">
-            <img
-              src={offer1}
-              alt="offer"
-              className="w-full h-48 object-cover rounded-t-lg mb-4 brightness-[0.8] hover:brightness-100"
-            />
-            <h1 className="text-xl font-semibold mb-4">
-              Player Recruitment Platform
-            </h1>
-            <p className="text-gray-700">
-              An innovative platform for sponsors to easily connect with
-              players.
-            </p>
-          </div>
-          <div className="first-offer max-w-[23rem] bg-gray-100 p-6 rounded-lg shadow-lg mb-8 lg:mb-0 transform transition duration-500 hover:scale-105">
-            <img
-              src={offer}
-              alt="offer"
-              className="w-full h-48 object-cover rounded-t-lg mb-4 brightness-[0.8] hover:brightness-100"
-            />
-            <h1 className="text-xl font-semibold mb-4">
-              A lot of Players in One Place
-            </h1>
-            <p className="text-gray-700">
-              We have a huge database of players with a lot of players and
-              clubs.
-            </p>
-          </div>
-          <div className="first-offer max-w-[23rem] bg-gray-100 p-6 rounded-lg shadow-lg mb-8 lg:mb-0 transform transition duration-500 hover:scale-105 ">
-            <img
-              src={offer2}
-              alt="offer"
-              className="w-full h-48 object-cover rounded-t-lg mb-4 brightness-[0.8] hover:brightness-100"
-            />
-            <h1 className="text-xl font-semibold mb-4">Anytime Anywhere</h1>
-            <p className="text-gray-700">
-              We are available 24/7 to help you with any problem you may have.
-            </p>
-          </div>
-        </div>
-      </section>
-      {/* ======== Our Offers end ========= */}
+        {/* Decorative Grid */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
 
-      {/* ======== About ========= */}
-      <About />
-      {/* ======== About end ========= */}
-
-      {/* ======== FAQs ========= */}
-      <section className="faq py-30 ">
-        <div className="container">
-          <h1 className="text-[3rem] font-bold text-center mb-[5rem]">
-            <span className="relative inline-block">
-              <span className="inline-block text-[3rem] text-white p-1 relative z-10">
-                What We Do !
+        <div className="container relative z-10 mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+            {/* Hero Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-[11px] font-black uppercase tracking-[0.3em] text-primaryColor backdrop-blur-xl border border-white/10">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primaryColor opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primaryColor"></span>
+                </span>
+                Next-Gen Recruitment
               </span>
-              <span className="rounded-[10px] absolute inset-0 bg-primaryColor z-0 transform -skew-x-3 -skew-y-3"></span>
-            </span>
-          </h1>
-          <div className="flex justify-between gap-[50px] lg:gap-[10rem]">
-            <div className="w-full md:w-1/2">
-              <h2 className="heading font-[900] text-center lg:text-left md:text-[2rem]">
-                We are here to help you with any problem you may have
-              </h2>
-              <FaqList />
+
+              <h1 className="text-5xl font-[1000] tracking-tight text-white md:text-7xl lg:text-8xl leading-[0.95]">
+                Unlock Your <br />
+                <span className="text-primaryColor italic">
+                  Full Potential.
+                </span>
+              </h1>
+
+              <p className="mt-8 max-w-xl text-lg font-medium leading-relaxed text-slate-400">
+                The world's most advanced platform for professional athlete
+                scouting. Connecting elite talent with global sponsors through
+                data-driven insights.
+              </p>
+
+              <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
+                <Link to="/players" className="group/btn relative">
+                  <div className="flex h-16 items-center justify-center rounded-full bg-primaryColor px-10 text-white shadow-2xl shadow-primaryColor/40 transition-all duration-500 hover:scale-105 hover:bg-red-700">
+                    <span className="text-sm font-black uppercase tracking-widest">
+                      Get Started
+                    </span>
+                    <FaChevronRight className="ml-3 text-xs transition-transform group-hover/btn:translate-x-1" />
+                  </div>
+                </Link>
+
+                <button className="flex items-center gap-4 text-white hover:text-primaryColor transition-colors">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-md">
+                    <FaPlay className="text-xs ml-1" />
+                  </div>
+                  <span className="text-sm font-bold uppercase tracking-widest">
+                    Watch Trailer
+                  </span>
+                </button>
+              </div>
+
+              {/* Stats Grid */}
+              <div className="mt-20 flex flex-wrap items-center gap-12 justify-center lg:justify-start border-t border-white/5 pt-10">
+                <div className="group">
+                  <h3 className="text-4xl font-black text-white">
+                    {playerCount}+
+                  </h3>
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 group-hover:text-primaryColor transition-colors">
+                      Elite Players
+                    </span>
+                    <div className="flex gap-0.5 text-[8px] text-yellow-500">
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                    </div>
+                  </div>
+                </div>
+                <div className="h-10 w-[1px] bg-white/10 hidden sm:block" />
+                <div className="group">
+                  <h3 className="text-4xl font-black text-white">
+                    {sponsorCount}+
+                  </h3>
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 group-hover:text-primaryColor transition-colors">
+                      Active Sponsors
+                    </span>
+                    <div className="flex gap-0.5 text-[8px] text-primaryColor">
+                      <FaCheckCircle />
+                      <FaCheckCircle />
+                      <FaCheckCircle />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="w-full lg:w-1/2 xl:w-[700px]">
-              <img
-                src={faqImg}
-                alt="faq"
-                className="rounded-[10px] h-[700px] object-cover object-top shadow-2xl w-3/4 lg:w-full"
-              />
+            {/* Hero Visual Element (Cinematic Athlete) */}
+            <div className="relative flex-1 hidden lg:block">
+              <div className="relative z-10 animate-float">
+                <div className="absolute -inset-10 rounded-[4rem] bg-gradient-to-tr from-primaryColor/30 to-transparent blur-3xl" />
+                <div className="relative overflow-hidden rounded-[3.5rem] border border-white/10 bg-white/5 p-3 backdrop-blur-2xl shadow-2xl">
+                  <div className="aspect-[4/5] rounded-[2.8rem] bg-slate-800 overflow-hidden relative group">
+                    <img
+                      src={LandingImg}
+                      alt="Elite Athlete"
+                      className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
+
+                    {/* Floating Data HUD overlay */}
+                    <div className="absolute bottom-8 left-8 right-8">
+                      <div className="rounded-2xl bg-black/40 p-5 backdrop-blur-md border border-white/10">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-[10px] font-black uppercase tracking-widest text-primaryColor">
+                            Pro Profile
+                          </span>
+                          <div className="flex gap-1">
+                            <div className="h-1 w-4 bg-primaryColor rounded-full" />
+                            <div className="h-1 w-2 bg-white/20 rounded-full" />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primaryColor to-red-800 flex items-center justify-center text-white text-xs font-black">
+                            PR
+                          </div>
+                          <div className="flex-1">
+                            <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                              <div className="h-full w-[85%] bg-primaryColor animate-pulse" />
+                            </div>
+                            <p className="mt-2 text-[10px] font-bold text-white/60 uppercase tracking-tighter">
+                              Peak Performance Analysis
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      {/* ======== FAQs end ========= */}
 
-      {/* ======== Contact ========= */}
-      <section className="contact h-[50vh] flex items-center justify-center relative bg-gray-100">
-        <div
-          className="absolute inset-0 bg-cover bg-center brightness-[0.3]"
-          style={{ backgroundImage: `url(${Contactimg})` }}></div>
-        <div className="relative container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center gap-8 z-10">
-          <div className="contact-content w-full text-center">
-            <h1 className="text-3xl font-bold text-white mb-6">
-              Do you have any questions? Get in touch with us!
-            </h1>
+      {/* ======== Modern Ecosystem (Process) ======== */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="mb-20 text-center">
+            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-primaryColor">
+              The Ecosystem
+            </span>
+            <h2 className="mt-4 text-4xl font-[1000] tracking-tight text-slate-900 md:text-5xl">
+              Engineered for{" "}
+              <span className="text-primaryColor">Excellence.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaLaptop />,
+                color: "blue",
+                title: "Precision Analytics",
+                desc: "Every metric tracked. Every performance quantified using our proprietary data engine.",
+              },
+              {
+                icon: <FaUsers />,
+                color: "green",
+                title: "Unified Network",
+                desc: "Seamless communication between athletes, agents, and sponsors in real-time.",
+              },
+              {
+                icon: <FaFutbol />,
+                color: "red",
+                title: "Global Reach",
+                desc: "Specialized recruitment for soccer and cricket across all major international leagues.",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group relative rounded-[2.5rem] border border-slate-200 bg-white p-10 transition-all duration-500 hover:-translate-y-2 hover:border-primaryColor/20 hover:shadow-2xl"
+              >
+                <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-900 text-white shadow-xl transition-all duration-500 group-hover:bg-primaryColor group-hover:scale-110">
+                  <span className="text-3xl">{item.icon}</span>
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-slate-500 font-medium leading-relaxed">
+                  {item.desc}
+                </p>
+                <div className="mt-8 flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-primaryColor transition-colors">
+                  Read Protocol <FaChevronRight className="text-[8px]" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======== Featured Opportunities (Offers) ======== */}
+      <section className="py-32 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-end justify-between mb-20 gap-8">
+            <div className="max-w-2xl">
+              <span className="text-[11px] font-black uppercase tracking-[0.3em] text-primaryColor">
+                Global Access
+              </span>
+              <h2 className="mt-4 text-4xl font-[1000] tracking-tight text-slate-900 md:text-5xl">
+                Tailored Scouting{" "}
+                <span className="text-primaryColor">Modules.</span>
+              </h2>
+            </div>
+            <Link
+              to="/services"
+              className="text-sm font-black uppercase tracking-widest text-slate-400 hover:text-primaryColor transition-colors flex items-center gap-2"
+            >
+              View All Modules <FaChevronRight className="text-[10px]" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {[
+              {
+                img: offer1,
+                title: "Elite Recruitment",
+                desc: "Access the top 1% of emerging global talent.",
+              },
+              {
+                img: offer,
+                title: "Data Dashboard",
+                desc: "Real-time statistics and historical performance tracking.",
+              },
+              {
+                img: offer2,
+                title: "24/7 Priority",
+                desc: "Global support and immediate contract facilitation.",
+              },
+            ].map((offer, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-[3rem] bg-slate-900 h-[450px]"
+              >
+                <img
+                  src={offer.img}
+                  alt={offer.title}
+                  className="h-full w-full object-cover opacity-50 transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
+                <div className="absolute bottom-10 left-10 right-10">
+                  <h3 className="text-2xl font-black text-white">
+                    {offer.title}
+                  </h3>
+                  <p className="mt-2 text-sm font-medium text-slate-400 leading-relaxed">
+                    {offer.desc}
+                  </p>
+                  <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-900 transition-all duration-500 group-hover:w-32 group-hover:bg-primaryColor group-hover:text-white">
+                    <span className="hidden group-hover:block text-[11px] font-black uppercase tracking-widest ml-4">
+                      Explore
+                    </span>
+                    <FaChevronRight className="text-[10px] ml-auto mr-5 group-hover:mr-4" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======== About Section Redesigned ======== */}
+      <About />
+
+      {/* ======== Insights & FAQs ======== */}
+      <section className="py-32 bg-slate-900 relative overflow-hidden">
+        <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-primaryColor/5 blur-[120px]" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-20">
+            <div className="flex-1">
+              <span className="text-[11px] font-black uppercase tracking-[0.3em] text-primaryColor">
+                Support Protocol
+              </span>
+              <h2 className="mt-6 text-4xl font-[1000] tracking-tight text-white md:text-5xl leading-tight">
+                Frequently Asked <br />
+                <span className="text-primaryColor italic">Questions.</span>
+              </h2>
+              <div className="mt-12">
+                <FaqList />
+              </div>
+            </div>
+
+            <div className="flex-1 hidden lg:block">
+              <div className="relative h-full min-h-[600px] rounded-[3rem] overflow-hidden border border-white/10">
+                <img
+                  src={faqImg}
+                  alt="FAQ"
+                  className="h-full w-full object-cover opacity-40 mix-blend-luminosity"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent" />
+                <div className="absolute bottom-12 left-12 right-12 p-8 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10">
+                  <p className="text-xl font-bold text-white leading-relaxed">
+                    "Pro-Pulse transformed how we scout talent. The data
+                    precision is unmatched in the industry."
+                  </p>
+                  <div className="mt-6 flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-full bg-primaryColor" />
+                    <div>
+                      <p className="text-sm font-black text-white">
+                        James Wilson
+                      </p>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        Global Scout, FIFA
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======== Final CTA: High Impact ======== */}
+      <section className="relative py-40 overflow-hidden bg-slate-900">
+        <div className="absolute inset-0">
+          <img
+            src={Contactimg}
+            alt="CTA"
+            className="h-full w-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-transparent to-slate-900" />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <h2 className="text-5xl font-[1000] tracking-tight text-white md:text-7xl">
+            Ready to <span className="text-primaryColor">Ascend?</span>
+          </h2>
+          <p className="mt-8 text-xl font-medium text-slate-400 max-w-2xl mx-auto">
+            Join the elite network of players and sponsors today. The future of
+            sports recruitment starts here.
+          </p>
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link to="/contact">
-              <button className="bg-red-600 text-white font-bold px-6 py-2 rounded-md transition duration-150 hover:bg-red-700">
-                <span>CONTACT US</span>
+              <button className="h-16 px-12 rounded-full bg-white text-slate-900 text-sm font-black uppercase tracking-widest transition-all hover:bg-primaryColor hover:text-white hover:scale-105">
+                Contact Strategy Team
+              </button>
+            </Link>
+            <Link to="/signup">
+              <button className="h-16 px-12 rounded-full border border-white/20 bg-white/5 text-white text-sm font-black uppercase tracking-widest backdrop-blur-md transition-all hover:bg-white/10">
+                Create Account
               </button>
             </Link>
           </div>
         </div>
       </section>
-      {/* ======== Contact end ========= */}
 
       {/* Scroll-to-Top Button */}
-      <div
-        className="scroll-to-top fixed bottom-4 right-4 bg-primaryColor text-white p-3 rounded-full shadow-lg cursor-pointer hover:bg-black transition duration-300 z-20"
-        onClick={scrollToTop}>
-        <FaArrowUp className="text-xl" />
-      </div>
+      {isVisible && (
+        <div
+          className="fixed bottom-8 right-8 h-14 w-14 flex items-center justify-center bg-primaryColor text-white rounded-full shadow-2xl cursor-pointer hover:bg-red-700 transition-all duration-300 z-50 animate-bounce"
+          onClick={scrollToTop}
+        >
+          <FaArrowUp className="text-lg" />
+        </div>
+      )}
     </div>
   );
 };

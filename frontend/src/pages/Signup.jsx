@@ -14,6 +14,7 @@ const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewURL, setPreviewURL] = useState("");
   const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   // Form Data
   const [formData, setFormData] = useState({
@@ -111,17 +112,23 @@ const Signup = () => {
   // Handle File Input Change
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+    setUploadLoading(true);
+    try {
+      const data = await uploadImage(file);
 
-    const data = await uploadImage(file);
+      console.log(data, data.url);
 
-    console.log(data, data.url);
-
-    setPreviewURL(data.url);
-    setSelectedFile(data.url);
-    setFormData({
-      ...formData,
-      photo: data.url,
-    });
+      setPreviewURL(data.url);
+      setSelectedFile(data.url);
+      setFormData({
+        ...formData,
+        photo: data.url,
+      });
+    } catch (error) {
+      toast.error("Failed to upload image");
+    } finally {
+      setUploadLoading(false);
+    }
   };
 
   // Handle Submit
@@ -259,7 +266,8 @@ const Signup = () => {
                   />
                   <button
                     type="button"
-                    onClick={toggleConfirmPasswordVisibility}>
+                    onClick={toggleConfirmPasswordVisibility}
+                  >
                     {formData.showConfirmPassword ? (
                       <FaEyeSlash className="text-primaryColor text-[22px]" />
                     ) : (
@@ -276,7 +284,8 @@ const Signup = () => {
                     value={formData.role}
                     onChange={handleInputChange}
                     className="ml-3 text-gray-500 bg-gray-50 font-semibold text-[15px] leading-7 px-4
-                py-2 rounded-md focus:outline-none">
+                py-2 rounded-md focus:outline-none"
+                  >
                     <option value="sponsor">Sponsor</option>
                     <option value="player">Player</option>
                   </select>
@@ -289,7 +298,8 @@ const Signup = () => {
                     value={formData.gender}
                     onChange={handleInputChange}
                     className="ml-3 text-gray-500 bg-gray-50 font-semibold text-[15px] leading-7 p-4
-                py-2 rounded-md focus:outline-none">
+                py-2 rounded-md focus:outline-none"
+                  >
                     <option value="">Select</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -301,7 +311,8 @@ const Signup = () => {
                 {selectedFile && (
                   <figure
                     className="w-[70px] h-[70px] rounded-full border-2 border-solid border-primaryColor
-                    flex items-center justify-center">
+                    flex items-center justify-center"
+                  >
                     <img
                       src={previewURL}
                       alt="profile"
@@ -320,11 +331,18 @@ const Signup = () => {
                     className="w-full h-full cursor-pointer opacity-0 left-0 right-0 absolute"
                   />
 
+                  {uploadLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 rounded-full">
+                      <HashLoader size={35} color="#0067FF" />
+                    </div>
+                  )}
+
                   <label
                     htmlFor="customFile"
                     className="absolute top-0 w-full h-full
                 flex items-center px-[0.7rem] py-[0.3rem] text-[16px] leading-6 overflow-hidden
-                bg-gray-200  text-black font-semibold rounded-lg truncate cursor-pointer">
+                bg-gray-200  text-black font-semibold rounded-lg truncate cursor-pointer"
+                  >
                     Upload photo
                   </label>
                 </div>
@@ -334,7 +352,8 @@ const Signup = () => {
                 <button
                   disabled={loading && true}
                   type="submit"
-                  className="w-full bg-primaryColor text-white px-4 py-3 text-[22px] font-semibold rounded-lg">
+                  className="w-full bg-primaryColor text-white px-4 py-3 text-[22px] font-semibold rounded-lg"
+                >
                   {loading ? <HashLoader color="white" /> : " Sign Up"}
                 </button>
               </div>
@@ -343,7 +362,8 @@ const Signup = () => {
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-primaryColor font-medium ml-1">
+                  className="text-primaryColor font-medium ml-1"
+                >
                   Login
                 </Link>
               </p>

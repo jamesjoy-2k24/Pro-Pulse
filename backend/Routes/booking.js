@@ -11,7 +11,7 @@ const router = express.Router();
 
 // router.post("/createBooking", authenticate, createBooking);
 router.get("/", authenticate, getBookings);
-router.post("/payment-success", paymentSuccess);
+router.get("/payment-success", paymentSuccess);
 router.post("/checkout-session/:playerId", authenticate, getCheckoutSession);
 router.delete("/:id", authenticate, deleteBooking);
 

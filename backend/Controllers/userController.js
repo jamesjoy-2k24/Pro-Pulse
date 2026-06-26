@@ -1,6 +1,7 @@
 import Sponsor from "../models/SponsorSchema.js";
+import Player from "../models/PlayerSchema.js";
+import Admin from "../models/AdminSchema.js";
 import Booking from "../models/BookingSchema.js";
-// import Player from "../models/PlayerSchema.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
@@ -21,7 +22,7 @@ export const updateSponsor = async (req, res) => {
 
     const token = jwt.sign(
       { _id: updatedSponsor._id, role: updatedSponsor.role },
-      process.env.JWT_SECRET_KEY
+      process.env.JWT_SECRET_KEY,
     );
 
     updatedSponsor.token = token;
@@ -31,6 +32,51 @@ export const updateSponsor = async (req, res) => {
   } catch (error) {
     // Return the error
     res.status(500).json(error);
+  }
+};
+
+// ======== Update a single user ========
+export const updateUser = async (req, res) => {
+  const id = req.userId;
+  const role = req.role;
+
+  try {
+    const { password, ...body } = req.body;
+    let updatedUser;
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      body.password = await bcrypt.hash(password, salt);
+    }
+
+    if (role === "admin") {
+      updatedUser = await Admin.findByIdAndUpdate(id, body, {
+        new: true,
+      }).select("-password");
+    } else if (role === "sponsor") {
+      updatedUser = await Sponsor.findByIdAndUpdate(id, body, {
+        new: true,
+      }).select("-password");
+    } else if (role === "player") {
+      updatedUser = await Player.findByIdAndUpdate(id, body, {
+        new: true,
+      }).select("-password");
+    } else {
+      return res.status(400).json({ message: "Invalid user role" });
+    }
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -112,11 +158,11 @@ export const getSponsorProfile = async (req, res) => {
 
 // ====== Get sponsor bookings ========
 export const getSponsorBookings = async (req, res) => {
-  const { id } = req.params;
+  const { sponsorId } = req.params;
   try {
-    const bookings = await Booking.find({ sponsor: id }).populate(
+    const bookings = await Booking.find({ sponsor: sponsorId }).populate(
       "player",
-      "name photo"
+      "name photo",
     );
 
     if (!bookings || bookings.length === 0) {

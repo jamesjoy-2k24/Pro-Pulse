@@ -12,14 +12,17 @@ const uploadImage = async (file) => {
   uploadData.append("width", 500);
   uploadData.append("height", 500);
 
-  const res = await fetch (`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-    method: "POST",
-    body: uploadData
-  });
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+    {
+      method: "POST",
+      body: uploadData,
+    },
+  );
 
   const data = await res.json();
 
   return data;
-}
+};
 
-export default uploadImage
+export default uploadImage;

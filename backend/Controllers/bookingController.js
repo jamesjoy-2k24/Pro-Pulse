@@ -1,9 +1,9 @@
 import Booking from "../models/BookingSchema.js";
 import Player from "../models/PlayerSchema.js";
 import Sponsor from "../models/SponsorSchema.js";
-import Review from "../models/ReviewSchema.js";
 import mongoose from "mongoose";
 import Stripe from "stripe";
+import { sendEmail } from "../utils/emailService.js";
 // import dotenv from "dotenv";
 // dotenv.config();
 // import { sendSMS } from "../utils/Twilio.js";
@@ -57,10 +57,6 @@ export const getCheckoutSession = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      // success_url: `${process.env.CLIENT_URL}/checkout-success`,
-      success_url: `${process.env.CLIENT_URL}/checkout-success?playerId=${player._id}`,
-      cancel_url: `${req.protocol}://${req.get("host")}/players/${player._id}`,
-
       client_reference_id: playerId,
       line_items: [
         {
@@ -76,6 +72,8 @@ export const getCheckoutSession = async (req, res) => {
           quantity: 1,
         },
       ],
+      success_url: `${process.env.CLIENT_URL}/checkout-success?playerId=${player._id}&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.protocol}://${req.get("host")}/players/${player._id}`,
     });
 
     // Create and save a new booking
@@ -105,22 +103,60 @@ export const getCheckoutSession = async (req, res) => {
 };
 
 // ====== Payment success ========
-
 export const paymentSuccess = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.body.data.id);
+    const { playerId, session_id } = req.query; // Expect sessionId directly from frontend
+
+    const booking = await Booking.findOne({
+      player: playerId,
+      sessionId: session_id,
+    })
+      .populate("player", "name email") // Explicitly include email
+      .populate("sponsor", "name email phone"); // Explicitly include email and phone
+
     if (!booking) {
       return res.status(404).json({
         success: false,
         message: "Booking not found",
       });
     }
+
     booking.status = "approved";
     booking.isPaid = true;
     await booking.save();
+
+    // Send email notification to the player
+    const emailContent = `
+      <h1>Congratulations! You've been hired!</h1>
+      <p>Dear ${booking.player.name},</p>
+      <p>We are excited to inform you that you have been hired by ${booking.sponsor.name}!</p>
+      <p>Here are the details of your new engagement:</p>
+      <ul>
+        <li><strong>Sponsor Name:</strong> ${booking.sponsor.name}</li>
+        <li><strong>Sponsor Email:</strong> ${booking.sponsor.email}</li>
+        <li><strong>Sponsor Phone:</strong> ${booking.sponsor.phone}</li>
+        <li><strong>Hired Player:</strong> ${booking.player.name}</li>
+        <li><strong>Booking Price:</strong> LKR ${booking.price}</li>
+        <li><strong>Transaction Timestamp:</strong> ${new Date(
+          booking.createdAt,
+        ).toLocaleString()}</li>
+      </ul>
+      <p>Please contact ${booking.sponsor.name} at ${
+        booking.sponsor.email
+      } to discuss the next steps.</p>
+      <p>Best regards,</p>
+      <p>The Pro-Pulse Team</p>
+    `;
+
+    await sendEmail({
+      to: booking.player.email,
+      subject: "Congratulations! You've been hired!",
+      html: emailContent,
+    });
+
     res.status(200).json({
       success: true,
-      message: "Payment successful",
+      message: "Payment successful and player notified",
     });
   } catch (error) {
     console.log(error);
@@ -130,8 +166,8 @@ export const paymentSuccess = async (req, res) => {
     });
   }
 };
-// ====== Get all bookings =========
 
+// ====== Get all bookings =========
 export const getBookings = async (req, res) => {
   try {
     const bookings = await Booking.find()

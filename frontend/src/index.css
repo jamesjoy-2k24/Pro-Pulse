@@ -25,10 +25,6 @@
     @apply text-[18px] leading-[20px] font-[400] mt-[1rem];
   }
 
-  .header {
-    @apply shadow-md bg-no-repeat bg-cover bg-center w-full h-[80px];
-  }
-
   .hero__section {
     @apply bg-[url('/src/assets/images/login.jpeg')] bg-no-repeat bg-cover bg-bottom;
   }
@@ -58,7 +54,23 @@
   .text_para {
     @apply text-[16px] leading-7 mt-3;
   }
-  .show__menu {
-    @apply block;
-  }
+}
+
+.navigation {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.sticky__header {
+  width: 100%;
+  min-height: 74px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }

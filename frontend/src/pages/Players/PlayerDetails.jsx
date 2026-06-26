@@ -67,7 +67,9 @@ const PlayerDetails = () => {
             <div className="flex items-center gap-5">
               <figure className="max-w-[250px] max-h-[300px]">
                 <img
-                  src={photo}
+                  src={
+                    photo || "https://via.placeholder.com/250x300?text=No+Image"
+                  }
                   alt={name}
                   className="w-full h-[250px] object-cover rounded-[10px]"
                 />
@@ -79,7 +81,8 @@ const PlayerDetails = () => {
                     sports.map((sport, index) => (
                       <span
                         key={index}
-                        className="rounded-md py-2 px-3 lg:py-2 lg:px-6 leading-4 lg:text-[16px] lg:leading-5 mr-3 bg-gray-200 font-bold">
+                        className="rounded-md py-2 px-3 lg:py-2 lg:px-6 leading-4 lg:text-[16px] lg:leading-5 mr-3 bg-gray-200 font-bold"
+                      >
                         {index > 0 && " "} {sport}
                       </span>
                     ))
@@ -92,7 +95,8 @@ const PlayerDetails = () => {
 
                 <h2
                   ref={headerRef}
-                  className="heading text-black text-[24px] leading-9 mt-3 font-bold">
+                  className="heading text-black text-[24px] leading-9 mt-3 font-bold"
+                >
                   {name}
                 </h2>
                 <p className="text__para text-[14px] leading-6">Age: {age}</p>
@@ -116,7 +120,8 @@ const PlayerDetails = () => {
                   tab === "about"
                     ? "text-primaryColor border-b-2 border-solid border-primaryColor"
                     : "text-black"
-                } py-2 px-5 mr-5 text-[16px] leading-7 text-black font-semibold`}>
+                } py-2 px-5 mr-5 text-[16px] leading-7 text-black font-semibold`}
+              >
                 About
               </button>
 
@@ -126,7 +131,8 @@ const PlayerDetails = () => {
                   tab === "feedback"
                     ? "text-primaryColor border-b-2 border-solid border-primaryColor"
                     : "text-black"
-                } py-2 px-5 mr-5 text-[16px] leading-7 text-black font-semibold`}>
+                } py-2 px-5 mr-5 text-[16px] leading-7 text-black font-semibold`}
+              >
                 Feedback
               </button>
             </div>

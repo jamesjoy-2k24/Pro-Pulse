@@ -6,6 +6,7 @@ import {
   getSingleSponsor,
   getSponsorProfile,
   getSponsorBookings,
+  updateUser,
 } from "../Controllers/userController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
 
@@ -27,6 +28,7 @@ router.get(
   restrict(["sponsor"]),
   getSponsorProfile
 );
+router.put("/profile/me", authenticate, updateUser);
 router.get(
   "/bookings/sponsor-bookings/:sponsorId",
   authenticate,
