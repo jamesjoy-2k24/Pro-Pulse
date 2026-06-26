@@ -6,3 +6,4 @@ yarn.lock
 # dot env
 .env
 .env.local
+env copy
