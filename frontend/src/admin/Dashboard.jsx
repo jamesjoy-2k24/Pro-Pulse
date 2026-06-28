@@ -46,113 +46,90 @@ const Dashboard = () => {
   };
 
   return (
-    <section className="p-0 h-screen">
-      <div className="flex h-full bg-gray-50">
+    <section className="p-0 min-h-screen bg-[#0b0c10] text-[#c5c6c7] font-sans antialiased overflow-x-hidden">
+      <div className="flex h-screen overflow-hidden">
+        {/* ===== Sidebar ===== */}
         <div
-          className={`bg-[#550e0e] h-full fixed top-0 z-50 ${
+          className={`bg-[#1f2833]/90 backdrop-blur-xl border-r border-[#1f2833] h-full fixed top-0 z-50 ${
             sidebarOpen ? "left-0" : "-left-full"
-          } transition-all duration-300 lg:relative lg:left-0 lg:w-[300px] z-5`}>
-          <div className="flex text-center justify-center items-center pt-[5rem]">
-            <h2 className="text-white font-bold text-xl flex flex-col gap-2">
-              Welcome! <br />
-              <span className="text-3xl">{user?.name} </span>
-            </h2>
+          } transition-all duration-500 ease-out lg:relative lg:left-0 lg:w-[280px] flex flex-col justify-between shadow-2xl`}>
+          <div>
+            {/* Header/Brand */}
+            <div className="flex text-center justify-between items-center p-6 border-b border-[#1f2833] mt-[2rem]">
+              <div className="flex flex-col text-left gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-widest text-[#66fcf1]">Admin Portal</span>
+                <h2 className="text-white font-bold text-xl tracking-tight">
+                  Welcome, <span className="text-white">{user?.name || "Admin"}</span>
+                </h2>
+              </div>
+              <button
+                className="lg:hidden text-[#c5c6c7] hover:text-white transition-colors duration-200"
+                onClick={() => setSidebarOpen(false)}>
+                <FaTimes size={20} />
+              </button>
+            </div>
+
+            {/* ===== Sidebar Content / Navigation ===== */}
+            <div className="flex flex-col gap-3 p-4 mt-6">
+              {[
+                { id: "dashboard", label: "Dashboard", icon: <FaDashcube /> },
+                { id: "players", label: "Players", icon: <FaUser /> },
+                { id: "users", label: "Users", icon: <FaUser /> },
+                { id: "notifications", label: "Bookings", icon: <FaBell /> },
+              ].map((tab) => (
+                <div
+                  key={tab.id}
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-all duration-300 font-medium text-sm tracking-wide ${
+                    activeTab === tab.id
+                      ? "bg-gradient-to-r from-[#66fcf1]/20 to-transparent text-[#66fcf1] border-l-4 border-[#66fcf1] shadow-[0_0_15px_rgba(102,252,241,0.1)]"
+                      : "text-[#8f94a6] hover:text-white hover:bg-white/5"
+                  }`}>
+                  <span className="text-base">{tab.icon}</span>
+                  <span>{tab.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Logout button at bottom of sidebar */}
+          <div className="p-4 border-t border-[#1f2833] mb-6">
             <button
-              className="lg:hidden text-white ml-8"
-              onClick={() => setSidebarOpen(false)}>
-              <FaTimes />
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-red-950/40 text-red-400 hover:text-white hover:bg-red-900/60 border border-red-900/40 hover:border-red-700/60 transition-all duration-300 font-semibold text-sm">
+              <FaDoorOpen />
+              Logout
+            </button>
+          </div>
+        </div>
+
+        {/* ===== Main Content Area ===== */}
+        <div className="flex-1 flex flex-col h-full overflow-y-auto">
+          {/* Top Bar for Mobile */}
+          <div className="lg:hidden p-4 bg-[#0b0c10] border-b border-[#1f2833] flex items-center justify-between sticky top-0 z-40">
+            <span className="text-white font-bold tracking-tight">Pro-Pulse</span>
+            <button
+              className="text-[#66fcf1] bg-[#1f2833] p-2.5 rounded-lg border border-[#1f2833]"
+              onClick={() => setSidebarOpen(true)}>
+              <FaBars size={18} />
             </button>
           </div>
 
-          {/* ===== sidebar content ===== */}
-          <div className="flex flex-col gap-6 p-5 pt-12">
-            <div
-              onClick={() => handleTabClick("dashboard")}
-              className={`flex justify-center p-3 px-8 shadow shadow-white text-black font-bold text-[19px] hover:bg-white hover:text-black transition-all duration-50 ease-in rounded-md cursor-pointer ${
-                activeTab === "dashboard"
-                  ? "bg-white bg-opacity-100"
-                  : "bg-white bg-opacity-5 text-white"
-              }`}>
-              <h3 className="flex items-center w-full gap-8">
-                <FaDashcube className="inline" /> Dashboard
-              </h3>
-            </div>
-
-            <div
-              onClick={() => handleTabClick("players")}
-              className={`flex justify-center p-3 px-8 shadow shadow-white text-black font-bold text-[19px] hover:bg-white hover:text-black transition-all duration-50 ease-in rounded-md cursor-pointer ${
-                activeTab === "players"
-                  ? "bg-white bg-opacity-100"
-                  : "bg-white bg-opacity-5 text-white"
-              }`}>
-              <h3 className="flex items-center w-full gap-8">
-                <FaUser className="inline" /> Players
-              </h3>
-            </div>
-
-            <div
-              onClick={() => handleTabClick("users")}
-              className={`flex justify-center p-3 px-8 shadow shadow-white text-black font-bold text-[19px] hover:bg-white hover:text-black transition-all duration-50 ease-in rounded-md cursor-pointer ${
-                activeTab === "users"
-                  ? "bg-white bg-opacity-100"
-                  : "bg-white bg-opacity-5 text-white"
-              }`}>
-              <h3 className="flex items-center w-full gap-8">
-                <FaUser className="inline" /> Users
-              </h3>
-            </div>
-
-            <div
-              onClick={() => handleTabClick("notifications")}
-              className={`flex justify-center p-3 px-8 shadow shadow-white text-black font-bold text-[19px] hover:bg-white hover:text-black transition-all duration-50 ease-in rounded-md cursor-pointer ${
-                activeTab === "notifications"
-                  ? "bg-white bg-opacity-100"
-                  : "bg-white bg-opacity-5 text-white"
-              }`}>
-              <h3 className="flex items-center w-full gap-8">
-                <FaBell className="inline" /> Bookings
-              </h3>
-            </div>
-
-            <div className="flex justify-center p-3 mt-[5rem] bg-black text-white shadow-sm shadow-white rounded-md font-bold text-xl hover:bg-white hover:text-black transition-all duration-50 ease-in">
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-5">
-                <FaDoorOpen className="inline" /> Logout
-              </button>
-            </div>
+          {/* Main Workspace */}
+          <div className="p-6 md:p-10 max-w-7xl w-full mx-auto">
+            {activeTab === "dashboard" && (
+              <Overview players={players} sponsors={sponsors} />
+            )}
+            {activeTab === "players" && <Players players={players} />}
+            {activeTab === "users" && (
+              <Users sponsors={sponsors} loading={loading} />
+            )}
+            {activeTab === "notifications" && (
+              <Bookings bookings={bookings} />
+            )}
+            {activeTab === "settings" && <Setting />}
           </div>
-          {/* ===== end sidebar content ===== */}
         </div>
-
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="flex-1 transition-all duration-300">
-            <div className="lg:hidden p-4 fixed ">
-              <button
-                className="text-white bg-primaryColor rounded-full p-2"
-                onClick={() => setSidebarOpen(true)}>
-                <FaBars />
-              </button>
-            </div>
-
-            {/* ===== Pass data to child components ===== */}
-            <div className="p-5 ml-10">
-              {activeTab === "dashboard" && (
-                <Overview players={players} sponsors={sponsors} />
-              )}
-              {activeTab === "players" && <Players players={players} />}
-              {activeTab === "users" && (
-                <Users sponsors={sponsors} loading={loading} />
-              )}
-              {activeTab === "notifications" && (
-                <Bookings bookings={bookings} />
-              )}
-              {activeTab === "settings" && <Setting />}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

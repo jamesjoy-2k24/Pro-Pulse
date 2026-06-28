@@ -131,14 +131,14 @@ const SponsorBookings = () => {
                 <div className="flex items-center gap-4 mb-6">
                   <figure className="w-16 h-16 rounded-2xl border border-white/10 p-0.5 overflow-hidden">
                     <img
-                      src={booking.player.photo}
-                      alt={booking.player.name}
+                      src={booking.player?.photo || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e"}
+                      alt={booking.player?.name || "Deleted Player"}
                       className="w-full h-full object-cover rounded-[14px]"
                     />
                   </figure>
                   <div>
                     <h3 className="text-white font-bold text-lg group-hover:text-primaryColor transition-colors">
-                      {booking.player.name}
+                      {booking.player?.name || "Deleted Player"}
                     </h3>
                     <p className="text-gray-500 text-xs font-medium uppercase tracking-tighter">
                       Professional Player
@@ -173,8 +173,9 @@ const SponsorBookings = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <button
+                    disabled={!booking.player}
                     onClick={() => openModal(booking.player)}
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-semibold transition-all group/btn"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-semibold transition-all group/btn disabled:opacity-30 disabled:pointer-events-none"
                   >
                     <HiOutlineEye className="text-lg group-hover/btn:scale-110 transition-transform" />
                     Details
